@@ -12,12 +12,12 @@ namespace ServerCore
     {
         private Socket _socket;
 
-        Action<Socket> _onAcceptHandler;
+        Func<Session> _sessionFactory;
 
-        public void Init(IPEndPoint endPoint, Action<Socket> onAcceptHandler)
+        public void Init(IPEndPoint endPoint, Func<Session> sessionFactory)
         {
             _socket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            _onAcceptHandler += onAcceptHandler;
+            _sessionFactory += sessionFactory;
 
 
             // 문지기 교육
@@ -42,12 +42,15 @@ namespace ServerCore
             }
         }
 
+        // 메인 쓰레드에서 사용중인 데이터를 수정하면 RaceCondition위험 있음
         private void OnAcceptCompleted(object sender, SocketAsyncEventArgs args)
         {
             if (args.SocketError == SocketError.Success)
             {
                 // Todo
-                _onAcceptHandler.Invoke(args.AcceptSocket);
+                Session session = _sessionFactory.Invoke();
+                session.Start(args.AcceptSocket);
+                session.OnConnected(args.AcceptSocket.RemoteEndPoint);
             }
             else
             {
