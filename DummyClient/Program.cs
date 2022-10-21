@@ -24,11 +24,15 @@ namespace DummyClient
             Console.WriteLine($"OnDisconnected: {endPoint}");
         }
 
-
-        public override void OnRecv(ArraySegment<byte> buffer)
+        // 패킷을 받으면 어떻게 처리하겠다는 규약을 정해야함
+        // 패킷은 일부만 받으면 수행x
+        // 이동 패킷 (특정 좌표로 이동하고 싶다)
+        // 15 3 2
+        public override int OnRecv(ArraySegment<byte> buffer)
         {
             string recvData = Encoding.UTF8.GetString(buffer.Array, buffer.Offset, buffer.Count);
             Console.WriteLine($"[From Server] {recvData}");
+            return buffer.Count;
         }
 
         public override void OnSend(int numOfBytes)
