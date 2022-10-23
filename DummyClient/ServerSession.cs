@@ -57,7 +57,7 @@ namespace DummyClient
                 count += 2;
                 success &= BitConverter.TryWriteBytes(new Span<byte>(s.Array, s.Offset + count, s.Count - count), packet.playerId);
                 count += 8;
-                success &= BitConverter.TryWriteBytes(new Span<byte>(s.Array, s.Offset + count, s.Count - count), count);
+                success &= BitConverter.TryWriteBytes(new Span<byte>(s.Array, s.Offset, count), count);
 
                 //byte[] size = BitConverter.GetBytes(packet.size); // 2
                 //byte[] packetId = BitConverter.GetBytes(packet.packetId); // 2
