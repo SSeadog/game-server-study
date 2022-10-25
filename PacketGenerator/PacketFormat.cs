@@ -10,20 +10,14 @@ namespace PacketGenerator
 class PacketManager
 {{
     #region Singleton
-    static PacketManager _instance;
-    public static PacketManager Instance
-    {{
-        get
-        {{
-            if (_instance == null)
-            {{
-                _instance = new PacketManager();
-            }}
-
-            return _instance;
-        }}
-    }}
+    static PacketManager _instance = new PacketManager();
+    public static PacketManager Instance {{ get {{ return _instance; }} }}
     #endregion
+
+    PacketManager()
+    {{
+        Register();
+    }}
 
     Dictionary<ushort, Action<PacketSession, ArraySegment<byte>>> _onRecv = new Dictionary<ushort, Action<PacketSession, ArraySegment<byte>>>();
     Dictionary<ushort, Action<PacketSession, IPacket>> _handler = new Dictionary<ushort, Action<PacketSession, IPacket>>();
@@ -189,7 +183,7 @@ count += sizeof({1});
         public static string readStringFormat =
 @"ushort {0}Len = BitConverter.ToUInt16(s.Slice(count, s.Length - count));
 count += sizeof(ushort);
-this.name = Encoding.Unicode.GetString(s.Slice(count, {0}Len));
+this.{0} = Encoding.Unicode.GetString(s.Slice(count, {0}Len));
 count += {0}Len;
 ";
 

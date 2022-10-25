@@ -14,7 +14,7 @@ namespace ServerCore
 
         Func<Session> _sessionFactory;
 
-        public void Init(IPEndPoint endPoint, Func<Session> sessionFactory)
+        public void Init(IPEndPoint endPoint, Func<Session> sessionFactory, int register = 10, int backlog = 100)
         {
             _socket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             _sessionFactory += sessionFactory;
@@ -24,11 +24,14 @@ namespace ServerCore
             _socket.Bind(endPoint);
 
             // 영업 시작
-            _socket.Listen(10); // 10을 초과하면 그 이후 요청은 Fail을 띄움
+            _socket.Listen(backlog); // 10을 초과하면 그 이후 요청은 Fail을 띄움
 
-            SocketAsyncEventArgs args = new SocketAsyncEventArgs();
-            args.Completed += new EventHandler<SocketAsyncEventArgs>(OnAcceptCompleted);
-            RegistAccept(args);
+            for (int i = 0; i < register; i++)
+            {
+                SocketAsyncEventArgs args = new SocketAsyncEventArgs();
+                args.Completed += new EventHandler<SocketAsyncEventArgs>(OnAcceptCompleted);
+                RegistAccept(args);
+            }
         }
 
         public void RegistAccept(SocketAsyncEventArgs args)

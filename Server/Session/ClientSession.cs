@@ -3,24 +3,32 @@ using ServerCore;
 using System.Net;
 using System.Text;
 
-namespace DummyClient
+namespace Server
 {
-    class ServerSession : PacketSession
+    class ClientSession : PacketSession
     {
+        public int SessionId { get; set; }
+        public GameRoom Room { get; set; }
+
         public override void OnConnected(EndPoint endPoint)
         {
-            Console.WriteLine($"Onconnected: {endPoint}");
+            Console.WriteLine($"OnCconnected: {endPoint}");
+
+            Program.Room.Push(() => Program.Room.Enter(this));
         }
 
         public override void OnDisconnected(EndPoint endPoint)
         {
+            SessionManager.Instance.Remove(this);
+            if (Room != null)
+            {
+                GameRoom room = Room;
+                room.Push(() => room.Leave(this));
+                Room = null;
+            }
             Console.WriteLine($"OnDisconnected: {endPoint}");
         }
 
-        // 패킷을 받으면 어떻게 처리하겠다는 규약을 정해야함
-        // 패킷은 일부만 받으면 수행x
-        // 이동 패킷 (특정 좌표로 이동하고 싶다)
-        // 15 3 2
         public override void OnRecvPacket(ArraySegment<byte> buffer)
         {
             PacketManager.Instance.OnRecvPacket(this, buffer);
