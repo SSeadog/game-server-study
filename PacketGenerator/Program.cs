@@ -124,40 +124,18 @@ namespace PacketGenerator
                 string memberType = r.Name.ToLower();
                 switch (memberType)
                 {
-                    case "bool":
-                        break;
                     case "byte":
+                    case "sbyte":
                         memberCode += string.Format(PacketFormat.memberFormat, memberType, memberName);
                         readCode += string.Format(PacketFormat.readByteFormat, memberName, memberType);
                         writeCode += string.Format(PacketFormat.writeByteFormat, memberName, memberType);
                         break;
-                    case "sbyte":
-                        break;
+                    case "bool":
                     case "short":
-                        memberCode += string.Format(PacketFormat.memberFormat, memberType, memberName);
-                        readCode += string.Format(PacketFormat.readFormat, memberName, ToMemberType(memberType), memberType);
-                        writeCode += string.Format(PacketFormat.writeFormat, memberName, memberType);
-                        break;
                     case "ushort":
-                        memberCode += string.Format(PacketFormat.memberFormat, memberType, memberName);
-                        readCode += string.Format(PacketFormat.readFormat, memberName, ToMemberType(memberType), memberType);
-                        writeCode += string.Format(PacketFormat.writeFormat, memberName, memberType);
-                        break;
                     case "int":
-                        memberCode += string.Format(PacketFormat.memberFormat, memberType, memberName);
-                        readCode += string.Format(PacketFormat.readFormat, memberName, ToMemberType(memberType), memberType);
-                        writeCode += string.Format(PacketFormat.writeFormat, memberName, memberType);
-                        break;
                     case "long":
-                        memberCode += string.Format(PacketFormat.memberFormat, memberType, memberName);
-                        readCode += string.Format(PacketFormat.readFormat, memberName, ToMemberType(memberType), memberType);
-                        writeCode += string.Format(PacketFormat.writeFormat, memberName, memberType);
-                        break;
                     case "float":
-                        memberCode += string.Format(PacketFormat.memberFormat, memberType, memberName);
-                        readCode += string.Format(PacketFormat.readFormat, memberName, ToMemberType(memberType), memberType);
-                        writeCode += string.Format(PacketFormat.writeFormat, memberName, memberType);
-                        break;
                     case "double":
                         memberCode += string.Format(PacketFormat.memberFormat, memberType, memberName);
                         readCode += string.Format(PacketFormat.readFormat, memberName, ToMemberType(memberType), memberType);
