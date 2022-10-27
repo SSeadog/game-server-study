@@ -12,7 +12,16 @@ namespace DummyClient
             // DNS
             string host = Dns.GetHostName();
             IPHostEntry ipHost = Dns.GetHostEntry(host);
-            IPAddress ipAddr = ipHost.AddressList[0];
+            IPAddress ipAddr = null;
+            foreach (IPAddress ip in ipHost.AddressList)
+            {
+                if (ip.AddressFamily != AddressFamily.InterNetworkV6 & !ip.Equals(IPAddress.Parse("127.0.0.1")))
+                {
+                    ipAddr = ip;
+                    break;
+                }
+            }
+            Console.WriteLine(ipAddr);
             IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
 
             Connector connector = new Connector();

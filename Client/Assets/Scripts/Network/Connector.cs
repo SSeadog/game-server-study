@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace ServerCore
 {
@@ -51,11 +52,11 @@ namespace ServerCore
                 Session session = _sessionFactory.Invoke();
                 session.Start(args.ConnectSocket);
                 session.OnConnected(args.RemoteEndPoint);
-
+                Debug.Log($"OnConnectCompleted Success");
             }
             else
             {
-                Console.WriteLine($"OnConnectCompleted Fail: {args.SocketError}");
+                Debug.Log($"OnConnectCompleted Fail: {args.SocketError}");
             }
         }
     }
