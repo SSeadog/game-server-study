@@ -33,10 +33,11 @@ public class PlayerManager : MonoBehaviour
 
         foreach (S_PlayerList.Player p in packet.players)
         {
-            GameObject go = Object.Instantiate(obj) as GameObject;
-
             if (p.isSelf)
             {
+                Object myObj = Resources.Load("MyPlayer");
+
+                GameObject go = Object.Instantiate(myObj) as GameObject;
                 MyPlayer myPlayer = go.AddComponent<MyPlayer>();
                 myPlayer.PlayerId = p.playerId;
                 myPlayer.transform.position = new Vector3(p.posX, p.posY, p.posZ);
@@ -44,6 +45,7 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
+                GameObject go = Object.Instantiate(obj) as GameObject;
                 Player player = go.AddComponent<Player>();
                 player.PlayerId = p.playerId;
                 player.transform.position = new Vector3(p.posX, p.posY, p.posZ);
