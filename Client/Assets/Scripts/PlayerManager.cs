@@ -56,8 +56,8 @@ public class PlayerManager : MonoBehaviour
     {
         if (_myPlayer.PlayerId == packet.playerId)
         {
-            // 1. ¼­¹ö¿¡¼­ okÆÐÅ¶ÀÌ ¿À¸é ÀÌµ¿½ÃÅ°´Â ¹æ¹ý(ÀÏ´Ü 1¹øÀ¸·Î)
-            // 2. ÀÏ´Ü ÀÌµ¿½ÃÅ°°í ¼­¹ö ÀÀ´äÀ» º¸°í º¸Á¤½ÃÅ°´Â ¹æ¹ý
+            // 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ okï¿½ï¿½Å¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½(ï¿½Ï´ï¿½ 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+            // 2. ï¿½Ï´ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½
             _myPlayer.transform.position = new Vector3(packet.posX, packet.posY, packet.posZ);
         }
         else
@@ -72,7 +72,7 @@ public class PlayerManager : MonoBehaviour
 
     public void EnterGame(S_BroadcastEnterGame packet)
     {
-        if (packet.playerId == packet.playerId)
+        if (_myPlayer.PlayerId == packet.playerId)
         {
             return;
         }
