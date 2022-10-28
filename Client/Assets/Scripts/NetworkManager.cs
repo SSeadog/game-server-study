@@ -21,8 +21,8 @@ public class NetworkManager : MonoBehaviour
         // DNS
         string host = Dns.GetHostName();
         IPHostEntry ipHost = Dns.GetHostEntry(host);
-        IPAddress ipAddr = IPAddress.Parse("210.179.37.247");
-        IPEndPoint endPoint = new IPEndPoint(ipAddr, 25);
+        IPAddress ipAddr = IPAddress.Parse("210.179.36.63");
+        IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
 
         Connector connector = new Connector();
 
